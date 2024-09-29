@@ -1,0 +1,18 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: test-job
+  namespace: test
+spec:
+  minAvailable: 1
+  schedulerName: volcano
+  tasks:
+    - replicas: 1
+      name: "test-task"
+      template:
+        spec:
+          containers:
+            - name: test-container
+              image: busybox
+              command: ["sh", "-c", "echo 'Test job running'; sleep 3600"]
+          restartPolicy: Never

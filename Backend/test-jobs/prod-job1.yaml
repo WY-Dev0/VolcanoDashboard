@@ -1,0 +1,18 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: prod-job
+  namespace: prod
+spec:
+  minAvailable: 1
+  schedulerName: volcano
+  tasks:
+    - replicas: 1
+      name: "prod-task"
+      template:
+        spec:
+          containers:
+            - name: prod-container
+              image: busybox
+              command: ["sh", "-c", "echo 'Prod job running'; sleep 3600"]
+          restartPolicy: Never

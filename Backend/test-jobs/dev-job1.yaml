@@ -1,0 +1,18 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: dev-job
+  namespace: dev
+spec:
+  minAvailable: 1
+  schedulerName: volcano
+  tasks:
+    - replicas: 1
+      name: "dev-task"
+      template:
+        spec:
+          containers:
+            - name: dev-container
+              image: busybox
+              command: ["sh", "-c", "echo 'Dev job running'; sleep 3600"]
+          restartPolicy: Never
