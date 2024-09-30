@@ -1,0 +1,20 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: pending-job
+spec:
+  minAvailable: 1
+  schedulerName: volcano
+  tasks:
+    - replicas: 1
+      name: "pending-task"
+      template:
+        spec:
+          containers:
+            - name: pending-container
+              image: busybox
+              command: ["sh", "-c", "echo 'Job pending'; sleep 3600"]
+              resources:
+                requests:
+                  cpu: "100"  # 请求非常高的CPU,可能导致pending
+          restartPolicy: Never

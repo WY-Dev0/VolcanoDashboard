@@ -1,0 +1,16 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: example-job
+spec:
+  minAvailable: 0
+  schedulerName: volcano
+  tasks:
+    - replicas: 1
+      name: "task-1"
+      template:
+        spec: 
+          containers:
+            - name: task-container
+              image: nginx
+              command: ["/bin/sh", "-c", "echo Hello from Volcano job"]

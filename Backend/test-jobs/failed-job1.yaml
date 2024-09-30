@@ -1,0 +1,17 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: failed-job
+spec:
+  minAvailable: 1
+  schedulerName: volcano
+  tasks:
+    - replicas: 1
+      name: "failed-task"
+      template:
+        spec:
+          containers:
+            - name: failed-container
+              image: busybox
+              command: ["sh", "-c", "echo 'Job failed'; exit 1"]
+          restartPolicy: Never

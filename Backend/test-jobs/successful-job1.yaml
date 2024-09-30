@@ -1,0 +1,17 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: successful-job
+spec:
+  minAvailable: 1
+  schedulerName: volcano
+  tasks:
+    - replicas: 1
+      name: "successful-task"
+      template:
+        spec:
+          containers:
+            - name: successful-container
+              image: busybox
+              command: ["sh", "-c", "echo 'Job successful'; sleep 10"]
+          restartPolicy: Never
